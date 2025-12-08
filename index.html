@@ -1,24 +1,31 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="HY_VMe6Kw84PCeMrwxWnpv8-tx4ALWep-X6zrZD6YgQ" />
-  <title>Johnson Koryon- Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Johnson Koryon - Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav id="navbar">
+  <nav id="navbar" aria-label="Main navigation">
     <div class="logo">My Portfolio</div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
+
+    <ul class="nav-links" role="menubar" aria-label="Primary">
+      <li role="none"><a role="menuitem" href="#about">About</a></li>
+      <li role="none"><a role="menuitem" href="#projects">Projects</a></li>
+      <li role="none"><a role="menuitem" href="#skills">Skills</a></li>
+      <li role="none"><a role="menuitem" href="#contact">Contact</a></li>
     </ul>
-    <div class="burger">&#9776;</div>
+
+    <div class="actions">
+      <!-- Theme toggle -->
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle dark / light theme">🌓</button>
+    </div>
+
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
   </nav>
+
   <header id="hero">
     <div class="hero-content">
       <h1>Hello, I'm <span class="highlight">Johnson Koryon</span></h1>
@@ -26,7 +33,7 @@
       <a href="#projects" class="btn">View My Work</a>
     </div>
     <div class="hero-image">
-      <img src="profile.jpg" alt="Profile Picture">
+      <img src="profile.jpg" alt="Profile Picture" />
     </div>
   </header>
 
@@ -40,22 +47,24 @@
   <section id="projects">
     <h2>Featured Projects</h2>
     <div class="projects-grid">
-    <div class="project-card">
-    <img src="game.png" alt="Project 1">
-    <h3>SLOT MACHINE GAME</h3>
-    <p>A Fun and interactive slot machine game built with JavaScript,CSS and HTML</p>
-    <a href="https://juiceboi30.github.io/slot-game/" class="card-btn" target="_blank">See More</a>
-</div>
       <div class="project-card">
-        <img src="weather.png" alt="Project 2">
+        <img src="game.png" alt="Project 1" />
+        <h3>SLOT MACHINE GAME</h3>
+        <p>A Fun and interactive slot machine game built with JavaScript, CSS and HTML</p>
+        <a href="https://juiceboi30.github.io/slot-game/" class="card-btn" target="_blank" rel="noopener">See More</a>
+      </div>
+
+      <div class="project-card">
+        <img src="weather.png" alt="Project 2" />
         <h3>Global Weather App</h3>
         <p>Responsive, visually-rich weather application providing real-time data and forecasts.</p>
         <a href="#" class="card-btn">See More</a>
       </div>
+
       <div class="project-card">
-        <img src="web.png" alt="Project 3">
+        <img src="web.png" alt="Project 3" />
         <h3>Portfolio Website</h3>
-        <p>A website designed to showcase my projects and skills as a developer.Which you are currently viewing.</p>
+        <p>A website designed to showcase my projects and skills as a developer. Which you are currently viewing.</p>
         <a href="#" class="card-btn">See More</a>
       </div>
     </div>
@@ -66,56 +75,49 @@
     <div class="skills-list">
       <div class="skill">
         <span>JavaScript</span>
-        <div class="progress-bar"><div style="width:90%"></div></div>
+        <div class="progress-bar"><div style="width:90%" data-pct="90"></div></div>
       </div>
       <div class="skill">
         <span>Python</span>
-        <div class="progress-bar"><div style="width:85%"></div></div>
+        <div class="progress-bar"><div style="width:85%" data-pct="85"></div></div>
       </div>
       <div class="skill">
         <span>MySQL</span>
-        <div class="progress-bar"><div style="width:80%"></div></div>
+        <div class="progress-bar"><div style="width:80%" data-pct="80"></div></div>
       </div>
       <div class="skill">
         <span>CSS</span>
-        <div class="progress-bar"><div style="width:75%"></div></div>
+        <div class="progress-bar"><div style="width:75%" data-pct="75"></div></div>
       </div>
       <div class="skill">
         <span>HTML</span>
-        <div class="progress-bar"><div style="width:70%"></div></div>
+        <div class="progress-bar"><div style="width:70%" data-pct="70"></div></div>
       </div>
     </div>
   </section>
 
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form id="contact-form" action="https://formspree.io/f/xyznnqvz" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea rows="4" name="message" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn">Send Message</button>
+      <div id="form-msg"></div>
+    </form>
+  </section>
 
-<!-- Contact Form updated for Formspree -->
-<section id="contact">
-  <h2>Contact Me</h2>
-  <form id="contact-form" action="https://formspree.io/f/xyznnqvz" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea rows="4" name="message" placeholder="Your Message" required></textarea>
-    <button type="submit" class="btn">Send Message</button>
-    <div id="form-msg"></div>
-  </form>
-</section>
- <footer>
-  <p> &copy; 2025 Johnson Koryon. Designed by Johnson Koryon.</p>
-  <p>
-    <a href="https://www.linkedin.com/in/me/" target="_blank">LinkedIn</a> |
-    <a href="https://github.com/juiceboi30" target="_blank">GitHub</a> |
-    <a href="https://instagram.com/juiceboi30" target="_blank">Instagram</a> |
-    <a href="https://www.facebook.com/juiceboi300" target="_blank">Facebook</a> |
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=johnsonkoryonofficial@gmail.com" target="_blank">Email</a> |
-  </p>
-</footer>
-
-
+  <footer>
+    <p>&copy; 2025 Johnson Koryon. Designed by Johnson Koryon.</p>
+    <p>
+      <a href="https://www.linkedin.com/in/me/" target="_blank" rel="noopener">LinkedIn</a> |
+      <a href="https://github.com/juiceboi30" target="_blank" rel="noopener">GitHub</a> |
+      <a href="https://instagram.com/juiceboi30" target="_blank" rel="noopener">Instagram</a> |
+      <a href="https://www.facebook.com/juiceboi300" target="_blank" rel="noopener">Facebook</a> |
+      <a href="mailto:johnsonkoryonofficial@gmail.com" target="_blank" rel="noopener">Email</a>
+    </p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
