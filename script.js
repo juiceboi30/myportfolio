@@ -1,14 +1,15 @@
-// script.js — glassmorphism + micro-interactions
-// Features:
-// - burger toggle (existing)
-// - smooth scroll (existing)
-// - nav frosted blur on scroll
-// - hero parallax (mouse & touch)
-// - project-card tilt + shine
-// - reveal-on-scroll (glass fade + translate)
-// - animate progress bars when visible
-// - theme toggle (persisted to localStorage)
-// - simple contact form send UI
+// script.js — glassmorphism + micro-interactions (updated theme restore earlier)
+/* Features:
+ - burger toggle (existing)
+ - smooth scroll (existing)
+ - nav frosted blur on scroll
+ - hero parallax (mouse & touch)
+ - project-card tilt + shine
+ - reveal-on-scroll (glass fade + translate)
+ - animate progress bars when visible
+ - theme toggle (persisted to localStorage) — restored early so CSS theme is applied before layout scripts
+ - simple contact form send UI
+*/
 
 (() => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -21,12 +22,46 @@
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
   /* ------------------
+     Theme: restore early so CSS sees the correct class
+     ------------------ */
+  const THEME_KEY = 'site-theme-v1';
+  const htmlEl = document.documentElement;
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      htmlEl.classList.remove('dark');
+      htmlEl.classList.add('light');
+    } else if (theme === 'dark') {
+      htmlEl.classList.remove('light');
+      htmlEl.classList.add('dark');
+    } else {
+      htmlEl.classList.remove('light','dark');
+    }
+  }
+
+  // restore saved theme immediately
+  (function restoreTheme() {
+    try {
+      const saved = localStorage.getItem(THEME_KEY);
+      if (saved) applyTheme(saved);
+      // no saved: fall back to system (prefers-color-scheme)
+    } catch (err) {
+      // ignore storage errors (e.g., in incognito)
+    }
+  })();
+
+  /* ------------------
      Burger nav toggle
      ------------------ */
   const burger = $('.burger');
   const navLinks = $('.nav-links');
   if (burger && navLinks) {
-    burger.addEventListener('click', () => navLinks.classList.toggle('active'));
+    burger.addEventListener('click', () => {
+      const expanded = navLinks.classList.toggle('active');
+      // Keep aria-expanded on burger for screen readers
+      const isExpanded = navLinks.classList.contains('active');
+      burger.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+    });
   }
 
   /* ------------------
@@ -60,9 +95,15 @@
       // increase blur and darken background slightly as we scroll
       const blur = 6 + t * 6; // 6 -> 12
       const alpha = 0.02 + t * 0.06; // 0.02 -> 0.08
+
+      // use CSS variable for overlay color so themes can control whether overlay is light/dark
+      const r = getComputedStyle(document.documentElement).getPropertyValue('--nav-overlay-r') || '255';
+      const g = getComputedStyle(document.documentElement).getPropertyValue('--nav-overlay-g') || '255';
+      const b = getComputedStyle(document.documentElement).getPropertyValue('--nav-overlay-b') || '255';
+
       nav.style.backdropFilter = `blur(${blur}px) saturate(${1 + t * 0.15})`;
-      nav.style.background = `linear-gradient(180deg, rgba(255,255,255,${alpha}) , rgba(255,255,255,${alpha * 0.2}))`;
-      nav.style.borderBottomColor = `rgba(255,255,255,${alpha * 1.2})`;
+      nav.style.background = `linear-gradient(180deg, rgba(${r},${g},${b},${alpha}) , rgba(${r},${g},${b},${alpha * 0.2}))`;
+      nav.style.borderBottomColor = `rgba(${r},${g},${b},${alpha * 1.2})`;
       nav.style.boxShadow = t > 0.02 ? 'var(--shadow-md)' : 'var(--shadow-sm)';
     };
     applyNavStyle();
@@ -91,7 +132,7 @@
           const cy = rect.top + rect.height / 2;
           const dx = (clientX - cx) / rect.width;  // -0.5 .. 0.5
           const dy = (clientY - cy) / rect.height;
-          const tx = clamp(dx * 18, -18, 18); // translate degrees px
+          const tx = clamp(dx * 18, -18, 18); // translate px
           const ty = clamp(dy * 18, -18, 18);
           // subtle 3D tilt + translate
           heroImage.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${tx * -0.04}deg)`;
@@ -121,7 +162,6 @@
     // create shine overlay
     const shine = document.createElement('div');
     shine.className = 'card-shine';
-    // minimal styles so they work without extra CSS (but better if you style in CSS)
     Object.assign(shine.style, {
       position: 'absolute',
       top: '0',
@@ -190,10 +230,8 @@
           const innerBars = el.querySelectorAll?.('.progress-bar > div') || [];
           innerBars.forEach(b => {
             const pct = b.getAttribute('data-pct') || b.style.width || '70%';
-            // normalize strings like "70" or "70%"
             let width = pct.toString();
             if (!width.includes('%')) width = width + '%';
-            // small stagger
             setTimeout(() => { b.style.width = width; }, 120);
           });
 
@@ -209,15 +247,12 @@
           });
 
           observer.unobserve(el);
-        } else {
-          // optional: you could remove class when out of view
         }
       });
     }, obsOptions);
 
     reveals.forEach(r => io.observe(r));
   } else {
-    // fallback: make everything visible
     reveals.forEach(r => r.classList.add('reveal--visible'));
     progressBars.forEach(b => {
       const pct = b.getAttribute('data-pct') || b.style.width || '70%';
@@ -226,40 +261,32 @@
   }
 
   /* ------------------
-     Theme toggle (light/dark) persisted
+     Theme toggle (persisted)
      ------------------ */
-  const THEME_KEY = 'site-theme-v1';
-  const htmlEl = document.documentElement;
-
-  function applyTheme(theme) {
-    if (theme === 'light') {
-      htmlEl.classList.remove('dark'); htmlEl.classList.add('light');
-    } else if (theme === 'dark') {
-      htmlEl.classList.remove('light'); htmlEl.classList.add('dark');
-    } else {
-      htmlEl.classList.remove('light','dark');
-    }
-  }
-
-  // initial restore
-  (function restoreTheme() {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved) applyTheme(saved);
-    else {
-      // follow system by default — nothing to do because we use prefers-color-scheme CSS
-    }
-  })();
-
-  // expose a small theme toggle if a .theme-toggle element exists
   const themeToggle = $('.theme-toggle');
   if (themeToggle) {
+    // initialize button state and label
+    const current = htmlEl.classList.contains('light') ? 'light' : htmlEl.classList.contains('dark') ? 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    themeToggle.setAttribute('aria-pressed', current === 'dark' ? 'false' : 'true');
+    themeToggle.textContent = current === 'light' ? '🌞' : '🌙';
+
     themeToggle.addEventListener('click', () => {
-      const current = htmlEl.classList.contains('light') ? 'light' : htmlEl.classList.contains('dark') ? 'dark' : null;
-      const next = current === 'light' ? 'dark' : 'light';
+      const now = htmlEl.classList.contains('light') ? 'light' : htmlEl.classList.contains('dark') ? 'dark' : null;
+      const next = now === 'light' ? 'dark' : 'light';
       applyTheme(next);
-      localStorage.setItem(THEME_KEY, next);
-      // small pulse
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+      // update control visuals
       themeToggle.animate([{ transform: 'scale(0.96)' }, { transform: 'scale(1)' }], { duration: 220, easing: 'cubic-bezier(.22,.9,.28,1)' });
+      themeToggle.setAttribute('aria-pressed', next === 'light' ? 'true' : 'false');
+      themeToggle.textContent = next === 'light' ? '🌞' : '🌙';
+    });
+
+    // keyboard accessibility
+    themeToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        themeToggle.click();
+      }
     });
   }
 
