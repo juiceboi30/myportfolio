@@ -1,7 +1,4 @@
-/* styles.css — modernized
-   - Supports light/dark (prefers-color-scheme)
-   - Improved variables, spacing, accessible focus, reduced-motion
-*/
+/* styles.css — updated with explicit theme variables + toggle styling */
 
 /* -------------------------
    Theme & Design Variables
@@ -10,11 +7,13 @@
   /* Color tokens (semantic) */
   --brand-primary: #0d6efd;        /* blue */
   --brand-accent:  #00ffd0;        /* neon mint */
-  --bg:            #0f1114;        /* page background (dark default) */
-  --surface:       #17181b;        /* cards, nav */
-  --surface-2:     #1f2227;        /* hover / elevated surface */
-  --text:          #e9eef6;        /* main text */
-  --muted:         #aab3bf;        /* secondary text */
+
+  /* default (dark) */
+  --bg:            #0f1114;
+  --surface:       #17181b;
+  --surface-2:     #1f2227;
+  --text:          #e9eef6;
+  --muted:         #aab3bf;
   --glass:         rgba(255,255,255,0.03);
   --glass-2:       rgba(255,255,255,0.02);
 
@@ -44,38 +43,59 @@
   --text-md: 1rem;
   --text-sm: 0.9rem;
   --lead-size: 1.35rem;
+
+  /* nav overlay color used by JS (rgba white by default for contrast on blur) */
+  --nav-overlay-r: 255;
+  --nav-overlay-g: 255;
+  --nav-overlay-b: 255;
 }
 
-/* Light theme (overrides) */
+/* Light theme (system) */
 @media (prefers-color-scheme: light){
   :root{
     --bg: #f7f8fb;
     --surface: #ffffff;
-    --surface-2: #f2f5f9;
+    --surface-2: #eef1f6;
     --text: #0e1724;
     --muted: #475569;
     --glass: rgba(10,18,28,0.03);
     --glass-2: rgba(10,18,28,0.02);
     --shadow-sm: 0 6px 18px rgba(17,24,39,0.06);
     --shadow-md: 0 12px 34px rgba(17,24,39,0.08);
-    --shadow-accent: 0 18px 48px rgba(13,110,253,0.06);
+    /* switch nav overlay to dark tint for light theme */
+    --nav-overlay-r: 10;
+    --nav-overlay-g: 18;
+    --nav-overlay-b: 28;
   }
 }
 
-/* Optional manual theme class (useful if toggling from JS) */
-:root.light { /* add .light to <html> for forced light mode */
+/* Manual forced themes (JS toggles these on <html>) */
+:root.light {
   --bg: #f7f8fb;
   --surface: #ffffff;
-  --surface-2: #f2f5f9;
+  --surface-2: #eef1f6;
   --text: #0e1724;
   --muted: #475569;
+  --glass: rgba(10,18,28,0.03);
+  --glass-2: rgba(10,18,28,0.02);
+  --shadow-sm: 0 6px 18px rgba(17,24,39,0.06);
+  --shadow-md: 0 12px 34px rgba(17,24,39,0.08);
+  --nav-overlay-r: 10;
+  --nav-overlay-g: 18;
+  --nav-overlay-b: 28;
 }
-:root.dark { /* add .dark to <html> for forced dark mode */
+
+:root.dark {
   --bg: #0f1114;
   --surface: #17181b;
   --surface-2: #1f2227;
   --text: #e9eef6;
   --muted: #aab3bf;
+  --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.02);
+  --nav-overlay-r: 255;
+  --nav-overlay-g: 255;
+  --nav-overlay-b: 255;
 }
 
 /* -------------------------
@@ -188,6 +208,21 @@ nav .actions{ display:flex; gap:12px; align-items:center; }
   padding:8px;
   border-radius:8px;
 }
+
+/* Theme Toggle Button */
+.theme-toggle {
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text);
+  transition: var(--transition-fast);
+  user-select: none;
+  border: 1px solid var(--glass);
+}
+.theme-toggle:hover { transform: translateY(-2px); }
+.theme-toggle:active { transform: translateY(0); }
 
 /* responsive nav */
 @media (max-width:650px){
