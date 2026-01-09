@@ -195,7 +195,7 @@ nav .nav-links a:focus{
   color:var(--text);
   background:var(--glass);
   outline:none;
-  transform:translateY(-2px);
+  transform: scale(0.7);
 }
 nav .actions{ display:flex; gap:12px; align-items:center; }
 .burger{
@@ -467,3 +467,4 @@ footer a:hover{ color:var(--brand-primary); text-decoration:underline; }
   outline-offset: 3px;
   border-radius:8px;
 }
+
