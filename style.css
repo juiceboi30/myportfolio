@@ -495,6 +495,20 @@ footer a:hover{ color:var(--brand-primary); text-decoration:underline; }
   transform: scale(1.25) rotate(6deg);
   box-shadow: 0 0 35px rgba(0,0,0,0.35);
 }
+header {
+  padding: 20px;
+}
+
+.logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 32px;
+  color: #222;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+
 
 
 
