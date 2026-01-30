@@ -18,6 +18,8 @@
     if (saved) applyTheme(saved);
   } catch (_) {}
 
+  /* ================= NAV / BURGER ================= */
+
   const burger = $('.burger');
   const navLinks = $('.nav-links');
 
@@ -33,28 +35,37 @@
       const href = link.getAttribute('href');
       if (!href || !href.startsWith('#')) return;
       e.preventDefault();
+
       navLinks?.classList.remove('active');
+
       const target = $(href);
       if (!target) return;
+
       const navHeight = $('nav')?.offsetHeight || 68;
       const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 8;
-      window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+
+      window.scrollTo({
+        top,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
     });
   });
+
+  /* ================= NAV SCROLL EFFECT ================= */
 
   const nav = $('nav');
   if (nav) {
     const updateNav = () => {
       const t = clamp(window.scrollY / 160, 0, 1);
-      const blur = 6 + t * 6;
-      const alpha = 0.02 + t * 0.06;
-      nav.style.backdropFilter = `blur(${blur}px)`;
-      nav.style.background = `rgba(255,255,255,${alpha})`;
+      nav.style.backdropFilter = `blur(${6 + t * 6}px)`;
+      nav.style.background = `rgba(255,255,255,${0.02 + t * 0.06})`;
       nav.style.boxShadow = t > 0.05 ? 'var(--shadow-md)' : 'var(--shadow-sm)';
     };
     updateNav();
     window.addEventListener('scroll', updateNav, { passive: true });
   }
+
+  /* ================= HERO PARALLAX ================= */
 
   const hero = $('#hero');
   const heroImg = $('.hero-image img');
@@ -66,11 +77,17 @@
       const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
       heroImg.style.transform = `translate(${dx * 18}px, ${dy * 18}px)`;
     });
-    hero.addEventListener('mouseleave', () => heroImg.style.transform = '');
+
+    hero.addEventListener('mouseleave', () => {
+      heroImg.style.transform = '';
+    });
   }
+
+  /* ================= PROJECT CARD TILT ================= */
 
   $$('.project-card').forEach(card => {
     if (prefersReducedMotion) return;
+
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
@@ -78,8 +95,13 @@
       card.style.transform =
         `perspective(900px) rotateX(${y * 8}deg) rotateY(${x * -12}deg)`;
     });
-    card.addEventListener('mouseleave', () => card.style.transform = '');
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
   });
+
+  /* ================= REVEAL ANIMATIONS ================= */
 
   const reveals = $$('section, .project-card, .skill, .hero-content');
 
@@ -98,15 +120,23 @@
     reveals.forEach(r => r.classList.add('reveal--visible'));
   }
 
+  /* ================= THEME TOGGLE ================= */
+
   const themeToggle = $('.theme-toggle');
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
       const next = htmlEl.classList.contains('light') ? 'dark' : 'light';
       applyTheme(next);
-      try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
+
+      try {
+        localStorage.setItem(THEME_KEY, next);
+      } catch (_) {}
+
       themeToggle.textContent = next === 'light' ? '🌞' : '🌙';
     });
   }
+
+  /* ================= CONTACT FORM ================= */
 
   const contactForm = $('#contact-form');
   const formMsg = $('#form-msg');
@@ -114,7 +144,6 @@
   if (contactForm) {
     contactForm.addEventListener('submit', async e => {
       e.preventDefault();
-
       formMsg.textContent = 'Sending...';
 
       const bar = document.createElement('div');
@@ -160,8 +189,9 @@
     });
   }
 
-  const originalTitle = document.title;
+  /* ================= TAB AWAY TITLE ================= */
 
+  const originalTitle = document.title;
   const awayMessages = [
     '👋 Hey, come back!',
     '🚀 Still exploring my portfolio?',
@@ -186,14 +216,27 @@
     }
   });
 
+  /* ================= SOCIAL ICONS ================= */
+
   document.querySelectorAll('.social-icons button').forEach(btn => {
+    const link = btn.dataset.link;
+    if (!link) return;
+
     btn.addEventListener('click', () => {
-      const link = btn.dataset.link;
-      btn.style.transform = 'scale(1.3) rotate(8deg)';
-      btn.style.boxShadow = '0 0 40px rgba(0,0,0,0.4)';
+      btn.classList.add('icon-active');
+
       setTimeout(() => {
-        window.open(link, '_blank');
-      }, 300);
+        window.open(link, '_blank', 'noopener');
+        btn.classList.remove('icon-active');
+      }, 250);
+    });
+
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        btn.click();
+      }
     });
   });
+
 })();
