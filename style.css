@@ -487,23 +487,15 @@ footer a:hover{ color:var(--brand-primary); text-decoration:underline; }
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
-.social-icons a {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: #222;
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition: transform 0.3s, background 0.3s;
+.social-icons button {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.social-icons a:hover {
-  transform: translateY(-4px);
-  background: #0077ff;
+.social-icons button.icon-active {
+  transform: scale(1.25) rotate(6deg);
+  box-shadow: 0 0 35px rgba(0,0,0,0.35);
 }
+
 
 
 
