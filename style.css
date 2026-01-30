@@ -495,6 +495,32 @@ footer a:hover{ color:var(--brand-primary); text-decoration:underline; }
   transform: scale(1.25) rotate(6deg);
   box-shadow: 0 0 35px rgba(0,0,0,0.35);
 }
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 70px;          
+  width: auto;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Mobile tweak */
+@media (max-width: 768px) {
+  .logo img {
+    height: 34px;
+  }
+}
+
+
 
 
 
