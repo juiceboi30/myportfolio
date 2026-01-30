@@ -1,18 +1,10 @@
-// script.js — glassmorphism + micro-interactions (Formspree FIXED)
-
 (() => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ------------------
-     Helpers
-  ------------------ */
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-  /* ------------------
-     Theme restore (early)
-  ------------------ */
   const THEME_KEY = 'site-theme-v1';
   const htmlEl = document.documentElement;
 
@@ -26,9 +18,6 @@
     if (saved) applyTheme(saved);
   } catch (_) {}
 
-  /* ------------------
-     Burger nav
-  ------------------ */
   const burger = $('.burger');
   const navLinks = $('.nav-links');
 
@@ -39,9 +28,6 @@
     });
   }
 
-  /* ------------------
-     Smooth scroll
-  ------------------ */
   $$('nav .nav-links a').forEach(link => {
     link.addEventListener('click', e => {
       const href = link.getAttribute('href');
@@ -56,16 +42,12 @@
     });
   });
 
-  /* ------------------
-     Nav blur on scroll
-  ------------------ */
   const nav = $('nav');
   if (nav) {
     const updateNav = () => {
       const t = clamp(window.scrollY / 160, 0, 1);
       const blur = 6 + t * 6;
       const alpha = 0.02 + t * 0.06;
-
       nav.style.backdropFilter = `blur(${blur}px)`;
       nav.style.background = `rgba(255,255,255,${alpha})`;
       nav.style.boxShadow = t > 0.05 ? 'var(--shadow-md)' : 'var(--shadow-sm)';
@@ -74,9 +56,6 @@
     window.addEventListener('scroll', updateNav, { passive: true });
   }
 
-  /* ------------------
-     Hero parallax
-  ------------------ */
   const hero = $('#hero');
   const heroImg = $('.hero-image img');
 
@@ -90,23 +69,18 @@
     hero.addEventListener('mouseleave', () => heroImg.style.transform = '');
   }
 
-  /* ------------------
-     Project card tilt
-  ------------------ */
   $$('.project-card').forEach(card => {
     if (prefersReducedMotion) return;
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `perspective(900px) rotateX(${y * 8}deg) rotateY(${x * -12}deg)`;
+      card.style.transform =
+        `perspective(900px) rotateX(${y * 8}deg) rotateY(${x * -12}deg)`;
     });
     card.addEventListener('mouseleave', () => card.style.transform = '');
   });
 
-  /* ------------------
-     Reveal on scroll
-  ------------------ */
   const reveals = $$('section, .project-card, .skill, .hero-content');
 
   if ('IntersectionObserver' in window) {
@@ -124,9 +98,6 @@
     reveals.forEach(r => r.classList.add('reveal--visible'));
   }
 
-  /* ------------------
-     Theme toggle
-  ------------------ */
   const themeToggle = $('.theme-toggle');
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
@@ -137,9 +108,6 @@
     });
   }
 
-  /* ==========================================================
-     ✅ CONTACT FORM — REAL FORMSPREE SUBMIT
-     ========================================================== */
   const contactForm = $('#contact-form');
   const formMsg = $('#form-msg');
 
@@ -171,7 +139,7 @@
         const res = await fetch(contactForm.action, {
           method: 'POST',
           body: new FormData(contactForm),
-          headers: { 'Accept': 'application/json' }
+          headers: { Accept: 'application/json' }
         });
 
         clearInterval(timer);
@@ -192,4 +160,29 @@
     });
   }
 
+  const originalTitle = document.title;
+
+  const awayMessages = [
+    '👋 Hey, come back!',
+    '🚀 Still exploring my portfolio?',
+    '😄 Don’t forget Johnson Koryon!',
+    '🔥 Cool stuff waiting here'
+  ];
+
+  let msgIndex = 0;
+  let titleInterval = null;
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      document.title = awayMessages[msgIndex];
+      titleInterval = setInterval(() => {
+        msgIndex = (msgIndex + 1) % awayMessages.length;
+        document.title = awayMessages[msgIndex];
+      }, 1500);
+    } else {
+      clearInterval(titleInterval);
+      titleInterval = null;
+      document.title = originalTitle;
+    }
+  });
 })();
