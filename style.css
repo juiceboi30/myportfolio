@@ -467,4 +467,43 @@ footer a:hover{ color:var(--brand-primary); text-decoration:underline; }
   outline-offset: 3px;
   border-radius:8px;
 }
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.social-icons button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  color: var(--text-primary, #fff);
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.social-icons button:hover {
+  transform: translateY(-6px) scale(1.08);
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary),
+    var(--brand-accent)
+  );
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.social-icons button:active {
+  transform: scale(0.9);
+}
+
+.social-icons button i {
+  pointer-events: none;
+}
+
+
 
