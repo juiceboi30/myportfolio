@@ -185,4 +185,15 @@
       document.title = originalTitle;
     }
   });
+
+  document.querySelectorAll('.social-icons button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const link = btn.dataset.link;
+      btn.style.transform = 'scale(1.3) rotate(8deg)';
+      btn.style.boxShadow = '0 0 40px rgba(0,0,0,0.4)';
+      setTimeout(() => {
+        window.open(link, '_blank');
+      }, 300);
+    });
+  });
 })();
