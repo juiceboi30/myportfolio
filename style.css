@@ -487,23 +487,24 @@ footer a:hover{ color:var(--brand-primary); text-decoration:underline; }
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
-.social-icons button:hover {
-  transform: translateY(-6px) scale(1.08);
-  background: linear-gradient(
-    135deg,
-    var(--brand-primary),
-    var(--brand-accent)
-  );
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+.social-icons a {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #222;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.3s, background 0.3s;
 }
 
-.social-icons button:active {
-  transform: scale(0.9);
+.social-icons a:hover {
+  transform: translateY(-4px);
+  background: #0077ff;
 }
 
-.social-icons button i {
-  pointer-events: none;
-}
 
 
 
