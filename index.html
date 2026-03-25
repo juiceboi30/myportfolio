@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-site-verification" content="HY_VMe6Kw84PCeMrwxWnpv8-tx4ALWep-X6zrZD6YgQ" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Johnson Koryon - Portfolio</title>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="logo">
+      <a href="#hero">
+        <img src="favicon.png" alt="Logo" />
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="actions">
+      <button class="theme-toggle">🌙</button>
+    </div>
+
+    <button class="burger">&#9776;</button>
+  </nav>
+
+  <!-- HERO -->
+  <header id="hero">
+    <div class="hero-content">
+      <h1>Hello, I'm <span class="highlight">Johnson Koryon</span></h1>
+      <p>A Computer Science Engineer and Developer</p>
+      <a href="#projects" class="btn">View My Work</a>
+    </div>
+
+    <div class="hero-image">
+      <img src="profile.jpg" alt="Profile" />
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      👋 Hi, I'm <strong>Johnson Koryon</strong>. I specialize in Full-stack development,
+      Software Engineering, and scalable system design. I love exploring new tech
+      and building innovative Apps and Websites that make life easier.
+    </p>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <h2>Featured Projects</h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <img src="game.png" alt="">
+        <h3>SLOT MACHINE GAME</h3>
+        <p>Fun slot machine game using JS, HTML, CSS</p>
+        <a href="https://juiceboi30.github.io/slot-game/" target="_blank" class="card-btn">See More</a>
+      </div>
+
+      <div class="project-card">
+        <img src="weather.png" alt="">
+        <h3>Weather App</h3>
+        <p>Real-time weather app</p>
+        <a href="#" class="card-btn">See More</a>
+      </div>
+
+      <div class="project-card">
+        <img src="web.png" alt="">
+        <h3>Portfolio Website</h3>
+        <p>This website you are viewing</p>
+        <a href="#" class="card-btn">See More</a>
+      </div>
+
+      <div class="project-card">
+        <img src="sign.png" alt="">
+        <h3>JUICE SHOP</h3>
+        <p>E-commerce food platform</p>
+        <a href="https://juiceboi30.github.io/JUICE-SHOP-An-E-COMMERCE-SITE-/" target="_blank" class="card-btn">See More</a>
+      </div>
+
+      <div class="project-card">
+        <img src="java.png" alt="">
+        <h3>Java Library System</h3>
+        <p>OOP project in Java</p>
+        <a href="https://github.com/juiceboi30/Text-Based-Library" target="_blank" class="card-btn">See More</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <h2>Skills</h2>
+
+    <div class="skills-list">
+
+      <div class="skill">
+        <span>JavaScript</span>
+        <div class="progress-bar"><div style="width:85%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>Python</span>
+        <div class="progress-bar"><div style="width:75%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>MySQL</span>
+        <div class="progress-bar"><div style="width:70%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>CSS</span>
+        <div class="progress-bar"><div style="width:75%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>HTML</span>
+        <div class="progress-bar"><div style="width:90%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>Java</span>
+        <div class="progress-bar"><div style="width:60%"></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 🔥 UPDATED CONTACT SECTION -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" rows="4" placeholder="Your Message" required></textarea>
+
+      <button type="submit" class="btn">Send Message</button>
+
+      <div id="form-msg"></div>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Johnson Koryon</p>
+
+    <div class="social-icons">
+      <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/juiceboi30" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:johnsonkoryonofficial@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+  </footer>
+
+  <!-- 🔥 JS TO CONNECT BACKEND -->
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+
+      const formMsg = document.getElementById("form-msg");
+
+      try {
+        const res = await fetch("http://localhost:5000/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name, email, message })
+        });
+
+        const data = await res.json();
+
+        formMsg.innerText = data.msg;
+        formMsg.style.color = "green";
+
+      } catch (err) {
+        formMsg.innerText = "Error sending message!";
+        formMsg.style.color = "red";
+      }
+    });
+  </script>
+
+</body>
+</html>
