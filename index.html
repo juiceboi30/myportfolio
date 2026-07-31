@@ -124,13 +124,37 @@
 
   <section id="contact">
     <h2>Contact Me</h2>
-    <form id="contact-form" action="https://formspree.io/f/xgoapebv" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea rows="4" name="message" placeholder="Your Message" required></textarea>
-      <button type="submit" class="btn">Send Message</button>
-      <div id="form-msg"></div>
-    </form>
+    <form id="contact-form">
+    <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Your Name"
+        required
+    />
+
+    <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Your Email"
+        required
+    />
+
+    <textarea
+        id="message"
+        name="message"
+        rows="5"
+        placeholder="Your Message"
+        required
+    ></textarea>
+
+    <button type="submit" class="btn">
+        Send Message
+    </button>
+
+    <div id="form-msg"></div>
+</form>
   </section>
 
   <footer>
