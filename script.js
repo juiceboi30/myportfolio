@@ -136,94 +136,49 @@
     });
   }
 
-    /* ================= CONTACT FORM ================= */
+  /* ================= CONTACT FORM ================= */
 
-  const contactForm = $('#contact-form');
-  const formMsg = $('#form-msg');
+const contactForm = $("#contact-form");
+const formMsg = $("#form-msg");
 
-  if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      formMsg.textContent = 'Sending...';
-      formMsg.style.color = '#fff';
+    formMsg.textContent = "Sending...";
+    formMsg.style.color = "#fff";
 
-      const bar = document.createElement('div');
-      bar.className = 'submit-progress';
-      bar.style.cssText = `
-        height:6px;
-        width:0%;
-        border-radius:6px;
-        background:linear-gradient(90deg,var(--brand-accent),var(--brand-primary));
-        transition:width .3s ease;
-        margin-top:10px;
-      `;
+    try {
+      const response = await fetch("https://myportfolio-2-qhdg.onrender.com/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: $("#name").value,
+          email: $("#email").value,
+          message: $("#message").value
+        })
+      });
 
-      contactForm.appendChild(bar);
+      const result = await response.json();
 
-      let pct = 20;
-
-      const timer = setInterval(() => {
-        pct = Math.min(pct + Math.random() * 15, 90);
-        bar.style.width = pct + '%';
-      }, 200);
-
-      try {
-
-        const response = await fetch("const response = await fetch("https://myportfolio-2-qhdg.onrender.com/contact", {", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            name: $("#name").value,
-            email: $("#email").value,
-            message: $("#message").value
-          })
-        });
-
-        clearInterval(timer);
-        bar.style.width = "100%";
-
-        const result = await response.json();
-
-        if (response.ok) {
-
-          formMsg.textContent =
-            result.msg || "Message sent successfully!"
-
-          formMsg.style.color = "lime";
-
-          contactForm.reset();
-
-        } else {
-
-          formMsg.textContent =
-            result.msg || "Failed to send message."
-
-          formMsg.style.color = "red";
-
-        }
-
-      } catch (err) {
-
-        clearInterval(timer);
-
-        formMsg.textContent =
-          "Server unavailable. Please try again.";
-
+      if (response.ok) {
+        formMsg.textContent = result.msg || "Message sent successfully!";
+        formMsg.style.color = "lime";
+        contactForm.reset();
+      } else {
+        formMsg.textContent = result.msg || "Failed to send message.";
         formMsg.style.color = "red";
-
-      } finally {
-
-        setTimeout(() => {
-          bar.remove();
-        }, 800);
-
       }
 
-    });
-  }
+    } catch (err) {
+      console.error(err);
+      formMsg.textContent = "Server unavailable. Please try again.";
+      formMsg.style.color = "red";
+    }
+  });
+}
   /* ================= TAB AWAY TITLE ================= */
 
   const originalTitle = document.title;
