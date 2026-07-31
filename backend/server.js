@@ -1,8 +1,11 @@
-require("dotenv").config();
+require("dotenv").config({ path: "./.env" });
 
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+
+console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("PORT:", process.env.PORT);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,12 +19,21 @@ app.use(cors({
 app.use(express.json());
 
 // ======================
-// ✅ MongoDB Atlas Connection
+// MongoDB Atlas Connection
 // ======================
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Atlas Connected"))
+
+if (!process.env.MONGO_URI) {
+  console.error("❌ MONGO_URI is missing!");
+  process.exit(1);
+}
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB Atlas Connected");
+  })
   .catch((err) => {
-    console.error("❌ MongoDB Connection Error:", err);
+    console.error("❌ MongoDB Connection Error:", err.message);
     process.exit(1);
   });
 
