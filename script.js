@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 (() => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -241,7 +240,7 @@
   });
 
 })();
-=======
+
 (() => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -484,4 +483,4 @@
   });
 
 })();
->>>>>>> aa732ea01a4c49bc6a149639f34a35378d444a91
+
